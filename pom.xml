@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>Apollon</name>
-    <url>https://github.com/Flurex</url>
+    <url>https://github.com/Flurex/Apollon</url>
     <description>The only TeamSpeak Bot you'll ever need.</description>
 
     <developers>
@@ -22,7 +22,7 @@
     </developers>
 
     <issueManagement>
-        <url>https://github.com/Flurex</url>
+        <url>https://github.com/Flurex/Apollon/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
