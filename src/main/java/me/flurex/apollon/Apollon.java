@@ -8,21 +8,23 @@ import com.github.theholywaffle.teamspeak3.api.exception.TS3ConnectionFailedExce
 import me.flurex.apollon.config.ConfigKey;
 import me.flurex.apollon.config.ConfigManager;
 import me.flurex.apollon.features.*;
+import me.flurex.apollon.methods.Methods;
 import me.flurex.apollon.utils.Log;
 
 public class Apollon {
 
     private final TS3Api api;
-    private final ConfigManager config;
-    private final Log logger = new Log();
+    private Log logger;
+    private ConfigManager config;
+    private Methods methods;
 
     public static void main(String[] args) {
         new Apollon();
     }
 
     protected Apollon() {
+        initClasses();
         logger.info("TeamSpeak Bot 'Apollon' v1.0 is starting...");
-        config = new ConfigManager();
         final TS3Config ts3Config = new TS3Config();
         ts3Config.setHost(config.get(ConfigKey.SERVER_HOST));
         logger.info("The Host was set to " + config.get(ConfigKey.SERVER_HOST));
@@ -97,11 +99,17 @@ public class Apollon {
             logger.info("The Feature 'AFKManager' is disabled");
         }
         if(config.getBoolean(ConfigKey.COMMANDS_ENABLED)) {
-            api.addTS3Listeners(new EssentialCommands(this));
-            logger.info("The Feature 'EssentialCommands' is enabled");
+            api.addTS3Listeners(new Commands(this));
+            logger.info("The Feature 'Commands' is enabled");
         } else {
-            logger.info("The Feature 'EssentialCommands' is disabled");
+            logger.info("The Feature 'Commands' is disabled");
         }
+    }
+
+    private void initClasses() {
+        logger = new Log(this);
+        methods = new Methods(this);
+        config = new ConfigManager(this);
     }
 
     public TS3Api getApi() {
@@ -111,4 +119,13 @@ public class Apollon {
     public ConfigManager getConfig() {
         return config;
     }
+
+    public Methods getMethods() {
+        return methods;
+    }
+
+    public Log getLogger() {
+        return logger;
+    }
+
 }

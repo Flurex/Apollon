@@ -1,5 +1,7 @@
 package me.flurex.apollon.methods;
 
+import com.github.theholywaffle.teamspeak3.TS3Api;
+import com.github.theholywaffle.teamspeak3.api.wrapper.Channel;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import me.flurex.apollon.Apollon;
 
@@ -12,8 +14,15 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Methods {
+
+    private final TS3Api api;
+
+    public Methods(Apollon plugin) {
+        this.api = plugin.getApi();
+    }
 
     public String getDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -29,8 +38,17 @@ public class Methods {
         }
     }
 
+    public boolean channelExists(String name) {
+        for(Channel channel : api.getChannels()) {
+            if(channel.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasVPN(ClientInfo ci) {
-        String address = ci.getIp().toString().replace("/", "").split(":")[0];
+        String address = ci.getIp().replace("/", "").split(":")[0];
         String url = "https://api.iptoasn.com/v1/as/ip/" + address;
         try {
             HttpURLConnection connection = (HttpURLConnection)(new URL(url)).openConnection();

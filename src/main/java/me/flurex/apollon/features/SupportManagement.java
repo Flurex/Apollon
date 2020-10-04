@@ -24,7 +24,7 @@ public class SupportManagement extends TS3EventAdapter {
     public SupportManagement(Apollon plugin) {
         this.api = plugin.getApi();
         this.config = plugin.getConfig();
-        this.logger = new Log();
+        this.logger = plugin.getLogger();
     }
 
     @Override

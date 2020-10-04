@@ -45,7 +45,11 @@ public enum ConfigKey {
     SUPPORT_CHANNEL_MAXCLIENTS("support.channel-maxclients"),
     COMMANDS_ENABLED("commands.enabled"),
     COMMANDS_HELP_ENABLED("commands.help-enabled"),
-    COMMANDS_HELP_MESSAGE("commands.help-message");
+    COMMANDS_HELP_MESSAGE("commands.help-message"),
+    COMMANDS_HELLO_ENABLED("commands.hello-enabled"),
+    COMMANDS_HELLO_MESSAGE("commands.hello-message"),
+    COMMANDS_KICKME_ENABLED("commands.kickme-enabled"),
+    COMMANDS_KICKME_MESSAGE("commands.kickme-message");
 
     private String key;
 

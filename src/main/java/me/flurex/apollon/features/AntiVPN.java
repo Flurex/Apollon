@@ -16,11 +16,13 @@ public class AntiVPN extends TS3EventAdapter {
     private final TS3Api api;
     private final ConfigManager config;
     private final Log logger;
+    private final Methods methods;
 
     public AntiVPN(Apollon plugin) {
         this.api = plugin.getApi();
         this.config = plugin.getConfig();
-        this.logger = new Log();
+        this.logger = plugin.getLogger();
+        this.methods = plugin.getMethods();
     }
 
     @Override
@@ -52,7 +54,7 @@ public class AntiVPN extends TS3EventAdapter {
                 }
             }
         }
-        if(new Methods().hasVPN(clientInfo)) {
+        if(methods.hasVPN(clientInfo)) {
             if(config.get(ConfigKey.ANTIVPN_MODE).equalsIgnoreCase("kick")) {
                 api.kickClientFromServer(config.get(ConfigKey.ANTIVPN_KICK_MESSAGE), clientInfo.getId());
                 logger.info("The Client '" + clientInfo.getNickname() + "' got kicked for using a VPN.");

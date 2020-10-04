@@ -1,19 +1,26 @@
 package me.flurex.apollon.utils;
 
+import me.flurex.apollon.Apollon;
 import me.flurex.apollon.methods.Methods;
 
 public class Log {
 
+    private final Apollon plugin;
+
+    public Log(Apollon plugin) {
+        this.plugin = plugin;
+    }
+
     public void info(String message) {
-        System.out.println(new Methods().getDate() + " [INFORMATION] " + message);
+        System.out.println(plugin.getMethods().getDate() + " [INFORMATION] " + message);
     }
 
     public void warning(String message) {
-        System.out.println(new Methods().getDate() + " [WARNING] " + message);
+        System.out.println(plugin.getMethods().getDate() + " [WARNING] " + message);
     }
 
     public void error(String message) {
-        System.out.println(new Methods().getDate() + " [ERROR] " + message);
+        System.out.println(plugin.getMethods().getDate() + " [ERROR] " + message);
     }
 
 }

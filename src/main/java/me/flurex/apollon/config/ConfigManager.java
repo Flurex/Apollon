@@ -1,5 +1,6 @@
 package me.flurex.apollon.config;
 
+import me.flurex.apollon.Apollon;
 import me.flurex.apollon.utils.Log;
 import me.flurex.apollon.methods.Methods;
 
@@ -13,13 +14,14 @@ import java.util.stream.IntStream;
 public class ConfigManager {
 
     private final Properties properties;
-    private final Log logger = new Log();
+    private final Apollon plugin;
 
-    public ConfigManager() {
-        if(!(new File(new Methods().getJarPath() + "/config.properties")).exists()) {
-            logger.warning("Could not find Configuration file. Creating a new one.");
+    public ConfigManager(Apollon plugin) {
+        this.plugin = plugin;
+        if(!(new File(plugin.getMethods().getJarPath() + "/config.properties")).exists()) {
+            plugin.getLogger().warning("Could not find Configuration file. Creating a new one.");
             try {
-                PrintWriter writer = new PrintWriter(new Methods().getJarPath() + "/config.properties", "UTF-8");
+                PrintWriter writer = new PrintWriter(plugin.getMethods().getJarPath() + "/config.properties", "UTF-8");
                 writer.println("# Thanks for using my TeamSpeak Bot!");
                 writer.println("# In this configuration file, you are able to change every important aspect of the Bot.");
                 writer.println(" ");
@@ -131,42 +133,50 @@ public class ConfigManager {
                 writer.println("# You can seperate the Text into two or more messages with using %nm%.");
                 writer.println("welcome.message=Welcome to my TeamSpeak Server!%nm%If you have any questions, you can always ask a Supporter!");
                 writer.println(" ");
-                writer.println("# Essential Commands");
+                writer.println("# Commands");
                 writer.println("# Enable/Disable the Feature");
                 writer.println("commands.enabled=true");
                 writer.println("# Enable/Disable the Help Command");
                 writer.println("commands.help-enabled=true");
+                writer.println("# Enable/Disable the Hello Command");
+                writer.println("commands.hello-enabled=true");
+                writer.println("# Enable/Disable the KickMe Command");
+                writer.println("commands.kickme-enabled=true");
                 writer.println("# The Message a user should be sent when entering the Help Command");
                 writer.println("# You can seperate the Text into two or more messages with using %nm%.");
                 writer.println("commands.help-message=This is the default Help Message.%nm%You can change it in the config.properties.");
+                writer.println("# The Message a user will be sent when sending !hello to the bot");
+                writer.println("commands.hello-message=Hey! My Name is Apollon. I'm the Query-Bot on this TeamSpeak.");
+                writer.println("# The Kick Reason a user will get when entering the !kickme Command");
+                writer.println("commands.kickme-message=Whatever bro..");
                 writer.close();
             } catch (FileNotFoundException e) {
-                logger.error("Could not copy default Configuration. Please check the permissions and try again.");
-                logger.error("Exception: FileNotFoundException");
-                logger.error("Here's the stack trace:");
+                plugin.getLogger().error("Could not copy default Configuration. Please check the permissions and try again.");
+                plugin.getLogger().error("Exception: FileNotFoundException");
+                plugin.getLogger().error("Here's the stack trace:");
                 e.printStackTrace();
                 System.exit(1);
             } catch (UnsupportedEncodingException e) {
-                logger.error("Could not copy default Configuration. Please contact the Developer about this.");
-                logger.error("Exception: UnsupportedEncodingException");
-                logger.error("Here's the stack trace:");
+                plugin.getLogger().error("Could not copy default Configuration. Please contact the Developer about this.");
+                plugin.getLogger().error("Exception: UnsupportedEncodingException");
+                plugin.getLogger().error("Here's the stack trace:");
                 e.printStackTrace();
             }
         }
         this.properties = new Properties();
         try {
-            FileInputStream fileInputStream = new FileInputStream(new Methods().getJarPath() + "/config.properties");
+            FileInputStream fileInputStream = new FileInputStream(plugin.getMethods().getJarPath() + "/config.properties");
             properties.load(fileInputStream);
         } catch (FileNotFoundException e) {
-            logger.error("Could not load the Configuration. Please check the permissions and try again.");
-            logger.error("Exception: FileNotFoundException");
-            logger.error("Here's the stack trace:");
+            plugin.getLogger().error("Could not load the Configuration. Please check the permissions and try again.");
+            plugin.getLogger().error("Exception: FileNotFoundException");
+            plugin.getLogger().error("Here's the stack trace:");
             e.printStackTrace();
             System.exit(1);
         } catch (IOException e) {
-            logger.error("Could not load the Configuration. Please contact the Developer about this.");
-            logger.error("Exception: IOException");
-            logger.error("Here's the stack trace:");
+            plugin.getLogger().error("Could not load the Configuration. Please contact the Developer about this.");
+            plugin.getLogger().error("Exception: IOException");
+            plugin.getLogger().error("Here's the stack trace:");
             e.printStackTrace();
         }
     }

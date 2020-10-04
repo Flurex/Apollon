@@ -21,7 +21,7 @@ public class AFKManager implements Runnable {
     public AFKManager(Apollon plugin) {
         this.api = plugin.getApi();
         this.config = plugin.getConfig();
-        this.logger = new Log();
+        this.logger = plugin.getLogger();
         this.executor = new ScheduledThreadPoolExecutor(1);
 
         executor.schedule(this, config.getInt(ConfigKey.AFK_CHECK_TIME), TimeUnit.SECONDS);
